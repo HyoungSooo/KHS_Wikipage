@@ -83,19 +83,6 @@ def create_data_more_than_one(data):
         Post.objects.create(**d)
 
 
-# def create_data():
-#     f = open('data.csv', 'r', encoding='utf-8')
-#     rdr = csv.reader(f)
-
-#     for line in rdr:
-#         Post.objects.create(
-#             title=line[0], content=line[1].replace('"', ''))
-
-#     f.close()
-
-#     return
-
-
 class TestAPI(TestCase):
     def setUp(self) -> None:
         self.client = TestClient(router)
