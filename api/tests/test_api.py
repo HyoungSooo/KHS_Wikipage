@@ -49,10 +49,8 @@ def get_post_detail(request, pk: int):
         ON w.post_id = p.id 
         WHERE p.id = {pk} 
         AND w.word_id
-        NOT IN (SELECT w.id
-          FROM post_word as w 
-          JOIN post_post_word as pw
-          ON w.id = pw.word_id
+        NOT IN (SELECT pw.id
+          FROM post_post_word as pw
           GROUP BY pw.word_id
           HAVING Count(pw.word_id) >= {count})
       ) AND pw.post_id != {pk}
