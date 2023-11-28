@@ -139,6 +139,22 @@ class TestAPI(TestCase):
         self.assertEqual(res_data.get('rel_post')[0].get(
             'title'), 'related_content')
 
+        one_word_paylaod = {
+            'title': '한 단어만 겹칠 때 테스트',
+            'content': '키위 동사 사과'
+        }
+
+        query_data = create_data(one_word_paylaod)
+
+        one_word_res = self.client.get(f'/test/detail?pk={query_data.id}')
+
+        # 데이터 생성 성공
+        self.assertEqual(res.status_code, 200)
+
+        data_one_word_res = json.loads(one_word_res.content)
+        # 한개의 단어만 겹침으로 연관 실패
+        self.assertEqual(len(data_one_word_res.get('rel_post')), 0)
+
         # 이 포스트가 생성되면 총 13개의 포스트 중 11개의 포스트에 더미라는 단어가 들어가게 됩니다.
         # 60% 조건에 어긋남으로 연관지어지지 않는지 테스트
         check_60_payload = {
